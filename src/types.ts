@@ -633,3 +633,19 @@ export type ReactGoogleChartContext = {
     | ReactGoogleChartProps["spreadSheetQueryParameters"]
     | null;
 };
+
+
+export type ReactLoaderProps = {
+  chartVersion?: GoogleChartVersion;
+  chartPackages?: GoogleChartPackages[];
+  chartLanguage?: string;
+  mapsApiKey?: string;
+  controls?: GoogleChartControlProp[];
+  toolbarItems?: GoogleChartToolbarItem[];
+  getChartEditor?: (args: {
+    chartEditor: GoogleChartEditor;
+    chartWrapper: GoogleChartWrapper;
+    google: GoogleViz;
+  }) => void;
+  onSucces?: (google: GoogleViz) => void;
+}

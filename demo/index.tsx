@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Chart } from "../src";
+import { Chart, Loader } from "../src";
 // Reference : https://developers.google.com/chart/interactive/docs/gallery/timeline
 const columns = [
   { type: "string", id: "President" },
@@ -104,6 +104,82 @@ const Issue317 = () => {
   );
 };
 
+class LoaderTest extends React.Component<{data:Array<any>}, {google: any, dataTable:any, rows:any, columns:any, aggregate:boolean}> {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+      dataTable:null,
+      rows:null,
+      columns:null,
+      google:null,
+      aggregate:false
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(this.state.dataTable && this.state.dataTable !== prevState.dataTable){
+      this.changeData();
+    }
+    if(this.state.google && this.props.data !== prevProps.data)
+      this.onSucces(this.state.google)
+  }
+  
+  render() {
+    const { rows, columns, google } = this.state;
+    return (
+      <div>
+        <Chart
+          chartType="ScatterChart"
+          width="100%"
+          height="400px"
+          legendToggle
+          rows={rows}
+          columns={columns}
+        />
+
+          
+          <button onClick={() => {this.setState({aggregate:!this.state.aggregate}); this.changeData()}}>Aggregate</button>
+        {!google && <Loader onSucces={this.onSucces}></Loader>}
+      </div>
+    );
+  }
+
+  onSucces = (google) => {
+    let dataTable = new google.visualization.arrayToDataTable(this.props.data)
+    this.setState({
+      dataTable,
+      google,
+    })
+  }
+
+  changeData = () => {
+    const { dataTable, google, aggregate } = this.state;
+    let newDataTable = aggregate ? google.visualization.data.group(
+      dataTable, 
+      [{column:0, modifier:this.modifierFunc, type:'number'}],
+      [{column:1, aggregation: google.visualization.data.sum, type:'number'}, {column:2, aggregation: google.visualization.data.sum, type:'number'}]
+    ) : dataTable
+
+    let array = this.dataTableToArray(newDataTable)
+    this.setState({rows:array, columns:this.props.data[0]})
+  }
+  modifierFunc = (ele) => {
+    return ele % 20
+  }
+
+  dataTableToArray = (dataTable) => {
+    let rows = [[...dataTable.vg]]
+    dataTable.wg.forEach((row, i) => {
+      row.c.forEach((element, j) => {
+        if(!rows[i]) rows[i] = []
+        rows[i][j] = element.v
+      });
+    });
+    return rows
+  }
+}
+
 class InteractiveChart extends React.Component<{}, { data: any[][] }> {
   constructor(props) {
     super(props);
@@ -149,6 +225,7 @@ class InteractiveChart extends React.Component<{}, { data: any[][] }> {
   render() {
     return (
       <div>
+        <LoaderTest data={this.state.data}></LoaderTest>
         <Issue317 />
         <Chart
           chartType="Gauge"
@@ -211,6 +288,8 @@ class InteractiveChart extends React.Component<{}, { data: any[][] }> {
           height="400px"
           legendToggle
         />
+        
+       
       </div>
     );
   }
