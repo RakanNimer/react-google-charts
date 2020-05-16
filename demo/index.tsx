@@ -104,7 +104,12 @@ const Issue317 = () => {
   );
 };
 
-class InteractiveChart extends React.Component<{}, { data: any[][] }> {
+type State = {
+  data: any[][];
+  isOrphansDemoVisible: boolean;
+}
+
+class InteractiveChart extends React.Component<{}, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -127,7 +132,8 @@ class InteractiveChart extends React.Component<{}, { data: any[][] }> {
         [4, 5.5, 1],
         [8, 12, 2],
         [11, 14, 3]
-      ]
+      ],
+      isOrphansDemoVisible: true
     };
   }
 
@@ -211,6 +217,24 @@ class InteractiveChart extends React.Component<{}, { data: any[][] }> {
           height="400px"
           legendToggle
         />
+
+        <button type="button" onClick={() => this.setState({isOrphansDemoVisible: !this.state.isOrphansDemoVisible})}>
+          Toggle orphans demo
+        </button>
+        {this.state.isOrphansDemoVisible && (
+          <Chart
+            chartType="LineChart"
+            data={[
+              ["x", "Very long label 111111111111111111111111", "cats"],
+              [0, 0, 0],
+              [1, 23, 15],
+              [2, 10, 5],
+            ]}
+            options={{ explorer: {}}}
+            width="100%"
+            height="400px"
+          />
+        )}
       </div>
     );
   }

@@ -212,6 +212,15 @@ export class GoogleChart extends React.Component<Props, State> {
       this.state.googleChartControls[i].control.setControlType(controlType);
     }
   }
+  componentWillUnmount() {
+    const {googleChartWrapper} = this.state;
+    if (googleChartWrapper) {
+      const chart = googleChartWrapper.getChart();
+      if (chart && chart.clearChart) {
+        chart.clearChart();
+      }
+    }
+  }
   shouldComponentUpdate(nextProps: Props, nextState: State) {
     return (
       this.state.isReady !== nextState.isReady ||
