@@ -449,11 +449,17 @@ export type GoogleChartOptions = {
   };
   bubble?: {};
   pieHole?: number;
+  redColor?: string;
   redFrom?: number;
   redTo?: number;
+  yellowColor?: string;
   yellowFrom?: number;
   yellowTo?: number;
+  greenColor?: string;
+  greenFrom?: number;
+  greenTo?: number;
   minorTicks?: number;
+  majorTicks?: string[];
   legend?:
     | string
     | {
