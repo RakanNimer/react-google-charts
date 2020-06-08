@@ -1,6 +1,6 @@
 ---
 route: /user-selection
-name: Interactions 
+name: Interactions
 ---
 
 
@@ -10,12 +10,15 @@ import Chart from '../../index'
 ## Simple example
 
 <Playground>
-  <Chart 
+  <Chart
     chartType="ScatterChart"
     data={[['x', 'dogs'], [0, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9]]}
     chartEvents={[
       {eventName: 'select', callback: ({chartWrapper}) => {
         const chart = chartWrapper.getChart();
+        if (!chart) {
+          return;
+        }
         const selection = chart.getSelection();
         if (selection.length === 1) {
           const [selectedItem] = selection;

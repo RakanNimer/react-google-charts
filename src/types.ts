@@ -194,7 +194,7 @@ export type GoogleChartWrapper = {
     setAction: (ChartAction: GoogleChartAction) => void;
     getImageURI: () => void;
     clearChart: () => void; // Clears the chart, and releases all of its allocated resources.
-  }; // ref to chart
+  } | null; // ref to chart
   getContainerId: () => string;
   getQuery: () => string;
   getRefreshInterval: () => number;

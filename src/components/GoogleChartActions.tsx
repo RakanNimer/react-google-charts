@@ -37,7 +37,10 @@ export class GoogleChartActionsInner extends React.Component<Props> {
   ) => {
     const { googleChartWrapper } = this.props;
     if (googleChartWrapper === null) return;
+
     const chart = googleChartWrapper.getChart();
+    if (chart === null) return;
+
     for (let chartAction of previousActions) {
       chart.removeAction(chartAction.id);
     }

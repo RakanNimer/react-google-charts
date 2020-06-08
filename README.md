@@ -188,7 +188,10 @@ const chartEvents = [
   {
     eventName: "select",
     callback({ chartWrapper }) {
-      console.log("Selected ", chartWrapper.getChart().getSelection());
+      const chart = chartWrapper.getChart();
+      if (chart) {
+        console.log("Selected ", chart.getSelection());
+      }
     }
   }
 ];

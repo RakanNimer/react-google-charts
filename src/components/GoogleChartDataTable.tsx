@@ -40,6 +40,10 @@ export class GoogleChartDataTableInner extends React.Component<
       "select",
       () => {
         const chart = googleChartWrapper.getChart();
+        if (!chart) {
+          return;
+        }
+
         const selection = chart.getSelection();
         const dataTable = googleChartWrapper.getDataTable();
         if (
@@ -259,8 +263,8 @@ export class GoogleChartDataTableInner extends React.Component<
     window.removeEventListener("resize", this.onResize);
     google.visualization.events.removeAllListeners(googleChartWrapper);
     if (googleChartWrapper.getChartType() === "Timeline") {
-      googleChartWrapper.getChart() &&
-        googleChartWrapper.getChart().clearChart();
+      const chart = googleChartWrapper.getChart();
+      chart && chart.clearChart();
     }
   }
 
