@@ -130,7 +130,7 @@ export interface ChartWrapperOptions {
     height: number;
     is3D: boolean;
     title: string;
-    backgroundColor: string;
+    backgroundColor: string | {fill: string, stroke: string, strokeWidth: number};
     hAxis?: {
       minValue?: any;
       maxValue?: any;
