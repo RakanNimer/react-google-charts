@@ -59,7 +59,7 @@
     "staticpath": "demo/dist/"
   },
   "author": "Rakan Nimer",
-  "homepage": "https://rakannimer.github.io/react-google-charts/",
+  "homepage": "https://react-google-charts.com",
   "license": "MIT",
   "repository": "https://github.com/RakanNimer/react-google-charts",
   "keywords": [
